@@ -1,0 +1,4 @@
+--patch-module
+eb.TriviaAPI=_
+--add-reads
+eb.TriviaAPI=ALL-UNNAMED
