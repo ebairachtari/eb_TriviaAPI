@@ -24,4 +24,5 @@
 Δείτε την εφαρμογή εδώ: [eb_TriviaFX](https://github.com/ebairachtari/eb_TriviaFX)
 
 ---
+---
 **Αναπτύχθηκε για εκπαιδευτικούς σκοπούς.**  
