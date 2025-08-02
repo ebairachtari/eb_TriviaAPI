@@ -28,40 +28,40 @@ public class TriviaAPIService {
     private final String CATEGORIES_URL = "https://opentdb.com/api_category.php"; // URL για την ανάκτηση κατηγοριών
     private final CloseableHttpClient httpClient; // HTTP Client για την αποστολή αιτημάτων
 
-    // Κατασκευαστής της TriviaAPIService που αρχικοποιεί τον HTTP Client
+    // Constructor that initializes the HTTP Client
     public TriviaAPIService() {
         this.httpClient = HttpClients.createDefault();
     }
 
-    // Μέθοδος για την αποκωδικοποίηση HTML χαρακτήρων στις ερωτήσεις
+    // Method for decoding HTML characters in the question data
     private Erwtisi decodeQuestion(Result r) {
         return new Erwtisi(
-            StringEscapeUtils.unescapeHtml4(r.getQuestion()), // Αποκωδικοποίηση ερώτησης
-            StringEscapeUtils.unescapeHtml4(r.getCategory()), // Αποκωδικοποίηση κατηγορίας
-            r.getDifficulty(), // Δυσκολία
-            r.getType(), // Τύπος 
-            StringEscapeUtils.unescapeHtml4(r.getCorrectAnswer()), // Αποκωδικοποίηση σωστής απάντησης
+            StringEscapeUtils.unescapeHtml4(r.getQuestion()), // Decodes the question text
+            StringEscapeUtils.unescapeHtml4(r.getCategory()), // Decodes the category text
+            r.getDifficulty(), // Difficulty level
+            r.getType(), // Type of question
+            StringEscapeUtils.unescapeHtml4(r.getCorrectAnswer()), // Decodes the correct answer
             r.getIncorrectAnswers().stream()
-                .map(StringEscapeUtils::unescapeHtml4) // Αποκωδικοποίηση λανθασμένων απαντήσεων
+                .map(StringEscapeUtils::unescapeHtml4) // Decodes the incorrect answers
                 .toList()
         );
     }
 
-    // Μέθοδος για την ανάκτηση κατηγοριών από το Trivia API
+    // Method to retrieve categories from the Trivia API
     public Map<String, Integer> getCategories() throws TriviaAPIException {
         Map<String, Integer> categories = new HashMap<>();
         try {
-            HttpGet request = new HttpGet(CATEGORIES_URL);  // Δημιουργία HTTP GET request
+            HttpGet request = new HttpGet(CATEGORIES_URL);  // Creates an HTTP GET request
             try (CloseableHttpResponse response = httpClient.execute(request)) {
                 if (response.getStatusLine().getStatusCode() != HttpStatus.SC_OK) {
-                    throw new TriviaAPIException("Σφάλμα API κατά την ανάκτηση κατηγοριών: " + response.getStatusLine());
+                    throw new TriviaAPIException("API error retrieving categories: " + response.getStatusLine());
                 }
                 HttpEntity entity = response.getEntity();
                 ObjectMapper mapper = new ObjectMapper();
                 JsonNode rootNode = mapper.readTree(entity.getContent());
                 JsonNode categoriesArray = rootNode.get("trivia_categories");
                 
-             // Αποθήκευση κατηγοριών σε έναν χάρτη (όνομα -> ID)
+             // Stores the categories into a map (name -> ID)
                 for (JsonNode categoryNode : categoriesArray) {
                     String name = categoryNode.get("name").asText();
                     int id = categoryNode.get("id").asInt();
@@ -69,77 +69,77 @@ public class TriviaAPIService {
                 }
             }
         } catch (IOException e) {
-            System.out.println("Σφάλμα: Δεν είναι δυνατή η σύνδεση με το API.");
-            throw new TriviaAPIException("Σφάλμα κατά την επικοινωνία με το Trivia API", e);
+            System.out.println("Error: Unable to connect to the API.");
+            throw new TriviaAPIException("Error communicating with Trivia API", e);
         }
-        return categories; // Επιστροφή κατηγοριών
+        return categories; // Returns the categories
     }
 
-    // Μέθοδος για την ανάκτηση ερωτήσεων με φίλτρα
+    // Method to retrieve questions using filters
     public List<Erwtisi> getQuestionsWithFilters(String difficulty, String type, Integer amount, Integer categoryId) throws TriviaAPIException {
         List<Erwtisi> questionsList = new ArrayList<>();
         try {
             if (amount == null || amount <= 0) {
-                amount = 5; // Προεπιλογή 5 ερωτήσεων
+                amount = 5; // Default to 5 questions
             }
 
-            // Δημιουργία του URI με τα φίλτρα που έχει επιλέξει ο χρήστης
+            // Builds the URI with selected filters
             URIBuilder uriBuilder = new URIBuilder(API_URL).addParameter("amount", String.valueOf(amount));
 
-            // Αν το categoryId δεν είναι null, προστίθεται στην κλήση
+            // If categoryId is provided, add it to the URI
             if (categoryId != null && categoryId > 0) {
                 uriBuilder.addParameter("category", String.valueOf(categoryId));
             }
 
-            // Προσθήκη δυσκολίας αν είναι επιλεγμένη
+            // Add difficulty to the URI if selected
             if (difficulty != null && !difficulty.equals("Any") && !difficulty.isEmpty()) {
                 uriBuilder.addParameter("difficulty", difficulty);
             }
 
-            // Προσθήκη τύπου αν είναι επιλεγμένος
+            // Add type to the URI if selected
             if (type != null && !type.equals("Any Type") && !type.isEmpty()) {
                 uriBuilder.addParameter("type", type);
             }
 
-            URI uri = uriBuilder.build(); // Κατασκευή του URI
+            URI uri = uriBuilder.build(); // Build the final URI
 
-            // Εκτύπωση του URI για έλεγχο
+            // Print the generated URI for debugging
             System.out.println("Generated URI: " + uri);
 
-            // Δημιουργία HTTP GET request προς το Trivia API
+            // Create HTTP GET request to Trivia API
             HttpGet request = new HttpGet(uri);
-            // Εκτέλεση του request και αποθήκευση της απόκρισης
+            // Execute request and store the response
             try (CloseableHttpResponse response = httpClient.execute(request)) {
-            	// Έλεγχος αν το JSON από το API είναι επιτυχής (HTTP 200 OK)
+            	// Check if the JSON response from the API is successful (HTTP 200 OK)
                 if (response.getStatusLine().getStatusCode() != HttpStatus.SC_OK) {
                     throw new TriviaAPIException("Σφάλμα API: " + response.getStatusLine());
                 }
                 
-                // Ανάκτηση του JSON
+                /// Retrieve the JSON entity
                 HttpEntity entity = response.getEntity();
-                // Μετατροπή του JSON σε αντικείμενο ErwtisiResult
+                // Convert the JSON to an ErwtisiResult object
                 ObjectMapper mapper = new ObjectMapper();
                 ErwtisiResult result = mapper.readValue(entity.getContent(), ErwtisiResult.class);
 
-                // Εκτύπωση της απόκρισης JSON
+                // Print the JSON response
                 System.out.println("Response JSON: " + result);
                 
-                // Μετατροπή των αποτελεσμάτων σε αντικείμενα Erwtisi
+                // Convert results into Erwtisi objects
                 for (Result r : result.getResults()) {
                     questionsList.add(decodeQuestion(r));
                 }
             }
         } catch (URISyntaxException | IOException e) {
-            throw new TriviaAPIException("Σφάλμα κατά την επικοινωνία με το Trivia API", e);
+            throw new TriviaAPIException("Error communicating with Trivia API", e);
         }
 
-        // Εκτύπωση των ερωτήσεων που επιστράφηκαν
+        // Print the fetched questions
         System.out.println("Fetched Questions: " + questionsList);
 
         return questionsList;
     }
 
-    // Μέθοδος για την ανάκτηση ερωτήσεων χωρίς φίλτρα (με τις προεπιλεγμένες παραμέτρους)
+    // Method to retrieve questions without filters (uses default parameters)
     public List<Erwtisi> getQuestionsWithoutFilters(int amount) throws TriviaAPIException {
         return getQuestionsWithFilters(null, null, amount, null);
     }
