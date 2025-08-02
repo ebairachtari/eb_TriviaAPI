@@ -20,7 +20,7 @@ class TriviaAPIWithoutFiltersTest {
 
     @Test
     void testGetQuestionsWithoutFilters() throws TriviaAPIException, InterruptedException {
-        Thread.sleep(5000); // Καθυστέρηση για αποφυγή rate limits
+        Thread.sleep(5000); // Delay to avoid rate limits
 
         List<Erwtisi> questions = triviaAPIService.getQuestionsWithoutFilters(5);
 
@@ -28,9 +28,9 @@ class TriviaAPIWithoutFiltersTest {
         assertFalse(questions.isEmpty(), "Η λίστα ερωτήσεων δεν πρέπει να είναι κενή.");
 
         questions.forEach(q -> System.out.println(
-            "Ερώτηση: " + q.getKeimeno() + "\n" +
-            "Κατηγορία: " + q.getKathgoria() + "\n" +
-            "Δυσκολία: " + q.getDiskolia() + "\n"
+            "Question: " + q.getKeimeno() + "\n" +
+            "Category: " + q.getKathgoria() + "\n" +
+            "Difficulty: " + q.getDiskolia() + "\n"
         ));
     }
 }
