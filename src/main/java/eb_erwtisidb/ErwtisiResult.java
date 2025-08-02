@@ -18,13 +18,20 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 })
 public class ErwtisiResult {
 
+    // Maps the "response_code" field from the JSON response
     @JsonProperty("response_code")
     private Integer responseCode;
+
+    // Maps the "results" field from the JSON response
     @JsonProperty("results")
     private List<Result> results;
+
+    // Holds any additional properties not explicitly mapped
     @JsonIgnore
     private Map<String, Object> additionalProperties = new LinkedHashMap<String, Object>();
 
+    // Getters/Setters
+    
     @JsonProperty("response_code")
     public Integer getResponseCode() {
         return responseCode;
