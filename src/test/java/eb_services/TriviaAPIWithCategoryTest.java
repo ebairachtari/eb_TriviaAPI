@@ -20,17 +20,17 @@ class TriviaAPIWithCategoryTest {
 
     @Test
     void testGetQuestionsWithCategory() throws TriviaAPIException, InterruptedException {
-        Thread.sleep(5000); // Καθυστέρηση για αποφυγή rate limits
+        Thread.sleep(5000); // Delay to avoid hitting API rate limits
 
-        // Κατηγορία "Sports" (ID: 21)
+        // Category "Sports" (ID: 21)
         List<Erwtisi> questions = triviaAPIService.getQuestionsWithFilters("easy", "boolean", 5, 21);
 
-        assertNotNull(questions, "Η λίστα ερωτήσεων δεν πρέπει να είναι null.");
-        assertFalse(questions.isEmpty(), "Η λίστα ερωτήσεων δεν πρέπει να είναι κενή.");
+        assertNotNull(questions, "The question list should not be empty");
+        assertFalse(questions.isEmpty(), "The question list should not be empty");
 
         questions.forEach(q -> {
-            assertEquals("Sports", q.getKathgoria(), "Η κατηγορία πρέπει να είναι Sports.");
-            System.out.println("Ερώτηση: " + q.getKeimeno() + " - Κατηγορία: " + q.getKathgoria());
+            assertEquals("Sports", q.getKathgoria(), "Each question should belong to the "Sports" category");
+            System.out.println("Question: " + q.getKeimeno() + " - Category: " + q.getKathgoria());
         });
     }
 }
