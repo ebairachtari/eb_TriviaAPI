@@ -22,6 +22,8 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 })
 public class Result {
 
+    // Maps the fields from the JSON response
+    
     @JsonProperty("type")
     private String type;
     @JsonProperty("difficulty")
@@ -37,6 +39,8 @@ public class Result {
     @JsonIgnore
     private Map<String, Object> additionalProperties = new LinkedHashMap<String, Object>();
 
+    // Getters/Setters
+    
     @JsonProperty("type")
     public String getType() {
         return type;
