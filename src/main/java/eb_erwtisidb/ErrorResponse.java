@@ -2,16 +2,16 @@ package eb_erwtisidb;
 
 public class ErrorResponse {
 
-    private int responseCode; // Κωδικός του σφάλματος
-    private String message;   // Περιγραφή του σφάλματος
+    private int responseCode; // Error code
+    private String message;   // Error message
 
-    // Constructor της ErrorResponse που αρχικοποιεί τον κωδικό και το μήνυμα του σφάλματος
+    // Constructor that initializes the error code and message
     public ErrorResponse(int responseCode, String message) {
         this.responseCode = responseCode;
         this.message = message;
     }
 
-    // Getters για την ανάκτηση κωδικού & μηνύματος του σφάλματος
+    // Getters for retrieving the error code & message
     public int getResponseCode() {
         return responseCode;
     }
@@ -20,7 +20,7 @@ public class ErrorResponse {
         return message;
     }
 
-    // Μέθοδος για εκτύπωση του σφάλματος
+    // Method to print the error details
     @Override
     public String toString() {
         return "ErrorResponse{" +
