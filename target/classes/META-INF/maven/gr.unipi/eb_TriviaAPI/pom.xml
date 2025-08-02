@@ -5,35 +5,35 @@
   <version>0.0.1-SNAPSHOT</version>
 
   <properties>
-    <!-- Ορισμός του encoding για τη σωστή υποστήριξη ελληνικών χαρακτήρων -->
+    <!-- Defines encoding to properly support Greek characters -->
   	<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <maven.compiler.source>21</maven.compiler.source>
     <maven.compiler.target>21</maven.compiler.target>
   </properties>
 
   <dependencies>
-    <!-- Εξάρτηση για τη βιβλιοθήκη Jackson, για τη μετατροπή δεδομένων JSON σε Java objects και το αντίστροφο -->
+    <!-- Dependency for the Jackson library, used to convert JSON data to Java objects and vice versa -->
     <dependency>
       <groupId>com.fasterxml.jackson.core</groupId>
       <artifactId>jackson-databind</artifactId>
       <version>2.15.0</version>
     </dependency>
 
-    <!-- Εξάρτηση για τη βιβλιοθήκη Apache HttpClient, για την αποστολή HTTP αιτημάτων και την ανάκτηση δεδομένων από το API -->
+    <!-- Dependency for the Apache HttpClient library, used to send HTTP requests and retrieve data from the API -->
     <dependency>
       <groupId>org.apache.httpcomponents</groupId>
       <artifactId>httpclient</artifactId>
       <version>4.5.13</version>
     </dependency>
     
-    <!-- Εξάρτηση για το Apache Commons Text, για την επεξεργασία και την αποκωδικοποίηση κειμένου -->
+    <!-- Dependency for Apache Commons Text, used for text processing and decoding -->
     <dependency>
       <groupId>org.apache.commons</groupId>
       <artifactId>commons-text</artifactId>
       <version>1.10.0</version>
     </dependency>
     
-    <!-- Εξάρτηση για το JUnit, μόνο για test χρήση -->
+    <!-- Dependency for JUnit, used for testing purposes only -->
     <dependency>
       <groupId>org.junit.jupiter</groupId>
       <artifactId>junit-jupiter</artifactId>
