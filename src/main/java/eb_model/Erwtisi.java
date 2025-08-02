@@ -4,15 +4,15 @@ import java.util.List;
 
 public class Erwtisi {
 
-    // Πεδία για την αποθήκευση δεδομένων της ερώτησης
-    private String keimeno; // Το κείμενο της ερώτησης
-    private String kathgoria; // Η κατηγορία της ερώτησης
-    private String diskolia; // Ο βαθμός δυσκολίας
-    private String tupos; // Ο τύπος της ερώτησης (Σωστό/Λάθος ή Πολλαπλής επιλογής)
-    private String swsthApanthsh; // Η σωστή απάντηση
-    private List<String> lanthasmenesApanthseis; // Οι λανθασμένες απαντήσεις
+    // Fields for storing question data
+    private String keimeno; // The question text
+    private String kathgoria; // The category of the question
+    private String diskolia; // The difficulty level
+    private String tupos; // The type of the question (True/False or Multiple Choice)
+    private String swsthApanthsh; // The correct answer
+    private List<String> lanthasmenesApanthseis; // The incorrect answers
 
-    // Constructor της Erwtisi
+    // Constructor for the Erwtisi class
     public Erwtisi(String keimeno, String kathgoria, String diskolia, String tupos, 
                    String swsthApanthsh, List<String> lanthasmenesApanthseis) {
         this.keimeno = keimeno;
@@ -23,7 +23,7 @@ public class Erwtisi {
         this.lanthasmenesApanthseis = lanthasmenesApanthseis;
     }
 
-    // Getters των παραμέτρων
+    // Getters for the fields
     public String getKeimeno() {
         return keimeno;
     }
@@ -48,7 +48,7 @@ public class Erwtisi {
         return lanthasmenesApanthseis;
     }
 
-    // εκτύπωση των δεδομένων
+    // Prints the question data
     @Override
     public String toString() {
         return "Erwtisi {" +
