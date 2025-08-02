@@ -7,22 +7,22 @@ public class TriviaAPIException extends Exception {
         super();
     }
 
-    // Constructor με μήνυμα σφάλματος
+    // Constructor with error message
     public TriviaAPIException(String message) {
         super(message);
     }
 
-    // Constructor με μήνυμα σφάλματος και αιτία
+    // Constructor with error message and cause
     public TriviaAPIException(String message, Throwable cause) {
         super(message, cause);
     }
 
-    // Constructor με μόνο την αιτία του σφάλματος
+    // Constructor with only the cause of the error
     public TriviaAPIException(Throwable cause) {
         super(cause);
     }
 
-    // Constructor με όλες τις επιλογές
+    // Constructor with all options
     protected TriviaAPIException(String message, Throwable cause, 
                                   boolean enableSuppression, 
                                   boolean writableStackTrace) {
